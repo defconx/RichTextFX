@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import org.fxmisc.richtext.model.EditableStyledDocument;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.NamedArg;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -19,6 +20,7 @@ import javafx.css.Styleable;
 import javafx.css.StyleableObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.AccessibleRole;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -64,7 +66,7 @@ public abstract class StyledTextField<PS, S> extends StyledTextArea<PS, S>
 
     private final static Pattern VERTICAL_WHITESPACE = Pattern.compile( "\\v+" );
     private final static String STYLE_SHEET;
-    private final static double HEIGHT;
+    private static double HEIGHT = 24;
     static {
         List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<>(GenericStyledArea.getClassCssMetaData());
         styleables.add( PROMPT_TEXT_FILL );  styleables.add( TEXT_ALIGNMENT );
@@ -78,9 +80,13 @@ public abstract class StyledTextField<PS, S> extends StyledTextArea<PS, S>
 
         // Ugly hack to get a TextFields default height :(
         // as it differs between Caspian, Modena, etc.
-        TextField tf = new TextField( "GetHeight" );
-        new Scene(tf); tf.applyCss(); tf.layout();
-        HEIGHT = tf.getHeight();
+        Runnable snapshot = () -> {
+            TextField tf = new TextField( "GetHeight" );
+            new Scene(tf).snapshot( null );
+            HEIGHT = tf.getHeight();
+        };
+        if ( Platform.isFxApplicationThread() ) snapshot.run();
+        else Platform.runLater( snapshot );
     }
 
     private boolean selectAll = true;
@@ -209,13 +215,15 @@ public abstract class StyledTextField<PS, S> extends StyledTextArea<PS, S>
 
 
     /**
-     * The prompt text to display or <tt>null</tt> if no prompt text is to be displayed.
+     * The prompt text to display or {@code null} if no prompt text is to be displayed.
      * <p>The Text will be aligned according to the text fields alignment setting and have a default
      * text fill of GRAY unless you have changed it by any means, e.g. with CSS "-fx-prompt-text-fill" 
      */
+    public final void setPromptText( Text value ) { placeholderProperty().set( value ); }
     public final ObjectProperty<? super Text> promptTextProperty() { return placeholderProperty(); }
     public final Text getPromptText() { return getPlaceholder() instanceof Text ? (Text) getPlaceholder() : null; }
-    public final void setPromptText( Text value ) { setPlaceholder( value ); }
+    /** setPlaceholder is not supported by StyledTextField, use setPromptText instead */ 
+    @Override public void setPlaceholder( Node value, Pos where ) { throw new UnsupportedOperationException("Use setPromptText instead"); }
     @Override protected void configurePlaceholder( Node placeholder )
     {
         placeholder.layoutYProperty().bind( Bindings.createDoubleBinding( () ->

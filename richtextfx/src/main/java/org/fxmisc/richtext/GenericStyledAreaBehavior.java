@@ -8,7 +8,6 @@ import static org.fxmisc.wellbehaved.event.EventPattern.*;
 import static org.fxmisc.wellbehaved.event.template.InputMapTemplate.*;
 import static org.reactfx.EventStreams.*;
 
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import javafx.event.Event;
@@ -90,7 +89,9 @@ class GenericStyledAreaBehavior {
                 consume(keyPressed(SHORTCUT_Z), (b, e) -> b.view.undo()),
                 consume(
                         anyOf(keyPressed(SHORTCUT_Y), keyPressed(SHORTCUT_SHIFT_Z)),
-                        (b, e) -> b.view.redo())
+                        (b, e) -> b.view.redo()),
+                // insert/overwrite
+                consume(keyPressed(INSERT), GenericStyledAreaBehavior::toggelOverwriteMode)
         );
         InputMapTemplate<GenericStyledAreaBehavior, KeyEvent> edits = when(b -> b.view.isEditable(), editsBase);
 
@@ -179,8 +180,10 @@ class GenericStyledAreaBehavior {
                 //Note that this is how several IDEs such JetBrains IDEs or Eclipse behave.
                 if (e.isControlDown() && e.isAltDown() && !e.isMetaDown() && e.getCharacter().length() == 1
                 	    && e.getCharacter().getBytes()[0] != 0) return true;
+                
+                return !e.isControlDown() && !e.isAltDown() && !e.isMetaDown();
             }
-        	return !e.isControlDown() && !e.isAltDown() && !e.isMetaDown();
+        	return !e.isControlDown() && !e.isMetaDown();
         };
 
         Predicate<KeyEvent> isChar = e ->
@@ -298,6 +301,11 @@ class GenericStyledAreaBehavior {
     private final GenericStyledArea<?, ?, ?> view;
 
     /**
+     * Indicates weather the area is in overwrite or insert mode.
+     */
+    private boolean overwriteMode = false;
+
+    /**
      * Indicates whether an existing selection is being dragged by the user.
      */
     private DragState dragSelection = DragState.NO_DRAG;
@@ -351,7 +359,19 @@ class GenericStyledAreaBehavior {
             return;
         }
 
-        view.replaceSelection(text);
+        IndexRange range = view.getSelection();
+        int start = range.getStart();
+        int end = range.getEnd();
+
+        if (overwriteMode && start == end) {
+            end = Math.min(end+1, view.getLength());
+        }
+
+        view.replaceText(start, end, text);
+    }
+
+    private void toggelOverwriteMode(KeyEvent ignore) {
+        overwriteMode = !overwriteMode;
     }
 
     private void deleteBackward(KeyEvent ignore) {

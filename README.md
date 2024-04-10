@@ -1,19 +1,21 @@
 
-RichTextFX
+RichTextFX  
 ==========
 
-RichTextFX provides a memory-efficient text area for JavaFX that allows the developer to style ranges of text, display custom objects in-line (no more HTMLEditor), and override the default behavior only where necessary without overriding any other part of the behavior.
+RichTextFX provides a memory-efficient text area for JavaFX that allows the developer to style ranges of text, display custom objects in-line (no more `HTMLEditor`), and override specific default behaviors only where necessary.
 
-It does not follow the MVC paradigm as this prevented access to view-specific API (e.g., getting the bounds of the caret/selection/characters, scrolling by some amount, etc.).
+The library does not follow the model-view-controller paradigm, which prevents access to view-specific APIs (e.g., obtaining caret/selection/character bounds, programmic scrolling, and such).
 
-It is intended as a base for rich-text editors and code editors with syntax highlighting. Since it is a base, a number of suggested features (specific syntax highlighters, search-and-replace, specific support for hyperlinks, etc.) will not be implemented directly in this project. Rather, developers can implement these on top of RichTextFX and submit their work as a PR to the `richtextfx-demos` package.
+Use the library as a foundation for building rich text editors and code editors that offer syntax highlighting. Being a foundation, many features will not be implemented in this project (such as language-specific syntax highlighters, search-and-replace, hyperlink support, and similar). Rather, developers may implement these features then submit the work as a PR to the `richtextfx-demos` package.
 
-For a greater explanation of RichTextFX, its design principles, how it works, and how to style its areas via CSS, please [see the wiki](https://github.com/FXMisc/RichTextFX/wiki)
+For further details about RichTextFX, its design principles, how it works, and applying CSS styling, [see the wiki](https://github.com/FXMisc/RichTextFX/wiki).
+
+[![JFXCentral](https://img.shields.io/badge/Find_me_on-JFXCentral-blue?logo=googlechrome&logoColor=white)](https://www.jfx-central.com/libraries/richtextfx)
 
 Demos
 -----
 
-Stand-alone Applications that demonstrate some of the features of RichTextFX have been moved to their own folder [here](./richtextfx-demos/)
+Standalone applications that demonstrate RichTextFX features may be found in the [RichTextFX demos](./richtextfx-demos/) directory.
 
 Table of Contents
 -----------------
@@ -31,7 +33,7 @@ Table of Contents
   * [Stable](#stable-release)
   * [Snapshot](#snapshot-releases)
 * API Documentation (Javadoc)
-  * [0.10.5](http://fxmisc.github.io/richtext/javadoc/0.10.5/index.html?org/fxmisc/richtext/package-summary.html)
+  * [0.11.1](http://fxmisc.github.io/richtext/javadoc/0.11.1/index.html?org/fxmisc/richtext/package-summary.html)
 * [License](#license)
 * [Contributing](./CONTRIBUTING.md)
 
@@ -39,37 +41,43 @@ Table of Contents
 Who uses RichTextFX?
 --------------------
 
-- [Kappa IDE](https://bitbucket.org/TomasMikula/kappaide/)
-- [Squirrel SQL client](http://www.squirrelsql.org/) (its JavaFX version)
-- [mqtt-spy](http://kamilfb.github.io/mqtt-spy/)
-- [Alt.Text](http://alttexting.com/)
-- [Xanthic](https://github.com/jrguenther/Xanthic)
 - [Arduino Harp](https://www.youtube.com/watch?v=rv5raLcsPNs)
-- [Markdown Writer FX](https://github.com/JFormDesigner/markdown-writer-fx)
-- [OmniEditor](https://github.com/giancosta86/OmniEditor), which is then used by [Chronos IDE](https://github.com/giancosta86/Chronos-IDE)
-- [JuliarFuture](https://juliar.org)
-- [BlueJ](https://www.bluej.org/)
-- [JabRef](http://www.jabref.org/)
-- [PsychSQL](http://softbydoc.dx.am/?page_id=135)
-- [Greenfoot](https://www.greenfoot.org/)
-- [Everest REST client](https://github.com/RohitAwate/Everest)
-- [XR3Player](https://github.com/goxr3plus/XR3Player)
-- [JDialogue](https://github.com/SkyAphid/JDialogue)
-- [George](http://www.george.andante.no)
-- [Nearde IDE](https://github.com/VenityStudio/Nearde-IDE)
 - [Astro IDE](https://github.com/AmrDeveloper/Astro) 
+- [BasicCAT](https://github.com/xulihang/BasicCAT/)
+- [BlueJ](https://www.bluej.org/)
+- [Boomega](https://github.com/Dansoftowner/Boomega)
 - [Chorus](https://github.com/iAmGio/chorus)
+- [Chronos IDE](https://github.com/giancosta86/Chronos-IDE)
+- [George](http://www.george.andante.no)
+- [Greenfoot](https://www.greenfoot.org/)
 - [EpubFx](https://gitlab.com/finanzer/epubfx/)
+- [Everest REST client](https://github.com/RohitAwate/Everest)
+- [JabRef](http://www.jabref.org/)
+- [JfxIDE](https://github.com/Zev-G/JfxIDE)
+- [JFXDevTools](https://github.com/Zev-G/JFXDevTools)
+- [JDialogue](https://github.com/SkyAphid/JDialogue)
+- [JuliarFuture](https://juliar.org)
+- [JVM Explorer](https://github.com/Naton1/jvm-explorer)
+- [Kappa IDE](https://bitbucket.org/TomasMikula/kappaide/)
+- [KeenWrite](https://github.com/DaveJarvis/keenwrite)
+- [Markdown Writer FX](https://github.com/JFormDesigner/markdown-writer-fx)
+- [mqtt-spy](http://kamilfb.github.io/mqtt-spy/)
+- [Nearde IDE](https://github.com/VenityStudio/Nearde-IDE)
+- [OmniEditor](https://github.com/giancosta86/OmniEditor)
+- [Recaf](https://github.com/Col-E/Recaf)
+- [SqlBrowserFx](https://github.com/pariskol/sqlbrowserfx/)
+- [Squirrel SQL client](http://www.squirrelsql.org/)
+- [Xanthic](https://github.com/jrguenther/Xanthic)
+- [XR3Player](https://github.com/goxr3plus/XR3Player)
 
-If you use RichTextFX in an interesting project, I would like to know!
-
+Let us know if you use RichTextFX in your project!
 
 Features
 --------
 
 * Assign arbitrary styles to arbitrary ranges of text. A style can be an object, a CSS string, or a style class string.
 * Display line numbers or, more generally, any graphic in front of each paragraph. Can be used to show breakpoint toggles on each line of code.
-* Support for displaying other `Node`s in-line
+* Support for displaying other `Node`s in-line.
 * Positioning a popup window relative to the caret or selection. Useful e.g. to position an autocompletion box.
 * Getting the character index under the mouse when the mouse stays still over the text for a specified period of time. Useful for displaying tooltips depending on the word under the mouse.
 * Overriding the default behavior only where necessary without overriding any other part.
@@ -84,8 +92,9 @@ The following explains the different rich text area classes. The first one is th
 
 `GenericStyledArea` allows one to inline custom objects into the area alongside of text. As such, it uses generics and functional programming to accomplish this task in a completely type-safe way.
 
-It has three parameter types:
- - `PS`, the paragraph style. This can be used for text alignment or setting the background color for the entire paragraph. A paragraph is either one line when text wrap is off or a long text displayed over multiple lines in a narrow viewport when text wrap is on,
+It has the following parameter types:
+
+ - `PS`, the paragraph style. This can be used for text alignment or setting the background color for the entire paragraph. A paragraph is either one line when text wrap is off or a long text displayed over multiple lines in a narrow viewport when text wrap is on.
  - `SEG`, the segment object. This specifies what immutable object to store in the model part of the area: text, hyperlinks, images, emojis, or any combination thereof.
  - `S`, the segment style. This can be used for text and object styling. Usually, this will be a CSS style or CSS style class.
 
@@ -115,7 +124,7 @@ area.setStyle(from, to, "-fx-font-weight: bold;");
 
 ### StyleClassedTextArea
 
-`StyleClassedTextArea` uses the `Node#setStyleClass(String styleClass) method to style `Text` objects. You can define the style classes in your stylesheet.
+`StyleClassedTextArea` uses the `Node#setStyleClass(String styleClass)` method to style `Text` objects. You can define the style classes in your stylesheet.
 
 example.css:
 
@@ -129,7 +138,7 @@ Example.java:
 area.setStyleClass(from, to, "red");
 ```
 
-This renders the text in the range `[from, to)` in red.
+This renders the text in the range `(from, to)` in red.
 
 #### CodeArea
 
@@ -138,38 +147,40 @@ This renders the text in the range `[from, to)` in red.
 Requirements
 ------------
 
-[JDK8](https://jdk8.java.net/download.html) is required, because [TextFlow](http://download.java.net/jdk8/jfxdocs/javafx/scene/text/TextFlow.html), introduced in JavaFX 8.0, is used to render each line. Also, there's a heavy use of lambdas, defender methods and the stream API in the code base.
+**JDK11** or higher is required. (Can still be compiled with JDK9 if needed)
 
 Download
 --------
 
 ### Stable release
 
-Current stable release is 0.10.5 which is a multi-release JAR that is compatible with Java 9 and UP without the need for `add-exports` or `add-opens` JVM arguments. 
+Current stable release is 0.11.2 which is ONLY compatible with Java 11 and UP. 
 
 #### Maven coordinates
 
 | Group ID            | Artifact ID | Version |
 | :-----------------: | :---------: | :-----: |
-| org.fxmisc.richtext | richtextfx  | 0.10.5  |
+| org.fxmisc.richtext | richtextfx  | 0.11.2  |
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.fxmisc.richtext/richtextfx/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.fxmisc.richtext/richtextfx)
 
 #### Gradle example
 
 ```groovy
 dependencies {
-    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.10.5'
+    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.11.2'
 }
 ```
 
 #### Sbt example
 
 ```scala
-libraryDependencies += "org.fxmisc.richtext" % "richtextfx" % "0.10.5"
+libraryDependencies += "org.fxmisc.richtext" % "richtextfx" % "0.11.2"
 ```
 
 #### Manual download
 
-Download [the JAR file](https://github.com/FXMisc/RichTextFX/releases/download/v0.10.5/richtextfx-0.10.5.jar) or [the fat JAR file (including dependencies)](https://github.com/FXMisc/RichTextFX/releases/download/v0.10.5/richtextfx-fat-0.10.5.jar) and place it on your classpath.
+Download [the JAR file](https://github.com/FXMisc/RichTextFX/releases/download/v0.11.2/richtextfx-0.11.2.jar) or [the fat JAR file (including dependencies)](https://github.com/FXMisc/RichTextFX/releases/download/v0.11.2/richtextfx-fat-0.11.2.jar) and place it on your classpath.
 
 ### Snapshot releases
 
@@ -207,3 +218,4 @@ License
 -------
 
 Dual-licensed under [BSD 2-Clause License](http://opensource.org/licenses/BSD-2-Clause) and [GPLv2 with the Classpath Exception](http://openjdk.java.net/legal/gplv2+ce.html).
+
